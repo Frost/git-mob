@@ -1,9 +1,11 @@
-use std::fs::File;
+use git2::Repository;
 use std::process;
-use git2::{Config, Repository};
+use std::fs::File;
+use git_mob::get_main_author;
 
 fn main() {
-    println!("{}", get_main_author());
+    let main_author = get_main_author();
+    println!("{}", main_author);
 
     match Repository::open_from_env() {
         Ok(repo) => {
@@ -14,16 +16,6 @@ fn main() {
             process::exit(1);
         }
     }
-}
-
-fn get_main_author() -> String {
-    let cfg = Config::open_default().unwrap();
-    let name = cfg.get_entry("user.name").unwrap();
-    let name = name.value().unwrap();
-    let email = cfg.get_entry("user.email").unwrap();
-    let email = email.value().unwrap();
-
-    format!("{} <{}>", name, email)
 }
 
 fn truncate_gitmessage_template(repo: Repository) {
