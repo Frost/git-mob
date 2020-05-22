@@ -1,7 +1,8 @@
-use git_mob::{Author, get_main_author, get_available_coauthors};
+use git_mob::{Author, get_main_author, get_available_coauthors, gitmessage_template_file_path, with_repo_or_exit};
+use git2::Repository;
 use structopt::StructOpt;
 use std::process;
-use std::collections::LinkedList;
+use std::fs;
 
 #[derive(StructOpt,Debug)]
 struct Opt {
@@ -17,14 +18,10 @@ fn main() {
 
     if opt.list {
         list_coauthors();
-    } else {
-        let mut coauthors = select_coauthors(&opt.coauthors);
-        coauthors.push_front(get_main_author());
-
-        for coauthor in coauthors {
-            println!("{}", coauthor);
-        }
+        process::exit(0);
     }
+
+    write_coauthors_to_gitmessage_file(&opt.coauthors);
 }
 
 fn list_coauthors() {
@@ -33,13 +30,36 @@ fn list_coauthors() {
     }
 }
 
-fn select_coauthors(coauthor_initials : &[String]) -> LinkedList<Author> {
+fn write_coauthors_to_gitmessage_file(coauthor_initials: &Vec<String>) {
+    let coauthors = select_coauthors(&coauthor_initials);
+    let mut content = String::from("\n\n");
+    for author in &coauthors {
+        content.push_str(&format!("Co-authored-by: {}\n", &author.to_string()));
+    }
+
+    let write_stuff = |repo: Repository| {
+        let path = gitmessage_template_file_path(repo);
+
+        match fs::write(path, content) {
+            Ok(_) => {},
+            Err(_e) => {},
+        }
+    };
+
+    with_repo_or_exit(write_stuff);
+    println!("{}", get_main_author());
+    for author in &coauthors {
+        println!("{}", author);
+    }
+}
+
+fn select_coauthors(coauthor_initials : &[String]) -> Vec<Author> {
     let all_coauthors = get_available_coauthors();
-    let mut coauthors : LinkedList<Author> = LinkedList::new();
+    let mut coauthors : Vec<Author> = Vec::new();
 
     for initial in coauthor_initials {
         match all_coauthors.get(initial) {
-            Some(coauthor) => coauthors.push_back(coauthor.clone()),
+            Some(coauthor) => coauthors.push(coauthor.clone()),
             None => {
                 eprintln!("Error: atuhor with initials {} not found", initial);
                 process::exit(1);
