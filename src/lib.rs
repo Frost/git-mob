@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use git2::Config;
+use git2::{Config, Repository};
 use std::fmt;
 use std::collections::BTreeMap;
 use dirs::home_dir;
@@ -53,4 +53,8 @@ fn parse_coauthors_file() -> Result<BTreeMap<String, Author>, Box<dyn Error>> {
         Some(coauthors) => Ok(serde_json::from_value(coauthors.clone()).unwrap()),
         None => Ok(BTreeMap::new())
     }
+}
+
+pub fn gitmessage_template_file_path(repo: Repository) -> std::path::PathBuf {
+    repo.path().join(".gitmessage")
 }

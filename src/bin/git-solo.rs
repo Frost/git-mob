@@ -1,7 +1,7 @@
 use git2::Repository;
 use std::process;
 use std::fs::File;
-use git_mob::get_main_author;
+use git_mob::{get_main_author, gitmessage_template_file_path};
 
 fn main() {
     let main_author = get_main_author();
@@ -19,6 +19,6 @@ fn main() {
 }
 
 fn truncate_gitmessage_template(repo: Repository) {
-    let template_path = repo.path().join(".gitmessage");
-    let _template = File::create(template_path);
+    let path = gitmessage_template_file_path(repo);
+    let _template = File::create(path);
 }
