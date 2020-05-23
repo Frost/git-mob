@@ -30,27 +30,29 @@ fn list_coauthors() {
     }
 }
 
-fn write_coauthors_to_gitmessage_file(coauthor_initials: &Vec<String>) {
+fn write_coauthors_to_gitmessage_file(coauthor_initials: &[String]) {
     let coauthors = select_coauthors(&coauthor_initials);
     let mut content = String::from("\n\n");
     for author in &coauthors {
         content.push_str(&format!("Co-authored-by: {}\n", &author.to_string()));
     }
 
-    let write_stuff = |repo: Repository| {
+    with_repo_or_exit(|repo: Repository| {
         let path = gitmessage_template_file_path(repo);
 
         match fs::write(path, content) {
-            Ok(_) => {},
-            Err(_e) => {},
+            Ok(_) => {
+                println!("{}", get_main_author());
+                for author in &coauthors {
+                    println!("{}", author);
+                }
+            },
+            Err(e) => {
+                eprintln!("Error writing to .gitmessage template: {}", e);
+                process::exit(1);
+            },
         }
-    };
-
-    with_repo_or_exit(write_stuff);
-    println!("{}", get_main_author());
-    for author in &coauthors {
-        println!("{}", author);
-    }
+    });
 }
 
 fn select_coauthors(coauthor_initials : &[String]) -> Vec<Author> {
