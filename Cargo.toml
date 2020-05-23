@@ -3,6 +3,11 @@ name = "git_mob"
 version = "0.1.0"
 authors = ["Martin Frost <martin@frost.ws>"]
 edition = "2018"
+description = "A CLI tool for social coding."
+license = "MIT"
+homepage = "https://github.com/Frost/git-mob"
+repository = "https://github.com/Frost/git-mob"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
