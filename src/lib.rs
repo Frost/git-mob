@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fs;
 use git2::{Config, Repository};
 use std::fmt;
 use std::collections::BTreeMap;
@@ -12,8 +13,8 @@ use std::process;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Author {
-    name: String,
-    email: String,
+    pub name: String,
+    pub email: String,
 }
 
 impl fmt::Display for Author {
@@ -44,7 +45,7 @@ pub fn get_available_coauthors() -> BTreeMap<String, Author> {
 }
 
 fn parse_coauthors_file() -> Result<BTreeMap<String, Author>, Box<dyn Error>> {
-    let coauthors_path = home_dir().unwrap().join(".git-coauthors");
+    let coauthors_path = coauthors_file_path();
     let coauthors_file = File::open(coauthors_path)?;
     let reader = BufReader::new(coauthors_file);
 
@@ -68,4 +69,21 @@ pub fn with_repo_or_exit<F: FnOnce(Repository)>(f: F) {
             process::exit(1);
         }
     }
+}
+
+pub fn write_coauthors_file(authors: BTreeMap<String, Author>) {
+    let mut wrapper_tree = BTreeMap::new();
+    wrapper_tree.insert("coauthors", authors);
+    let json_data = serde_json::to_string_pretty(&wrapper_tree).unwrap();
+    match fs::write(coauthors_file_path(), json_data) {
+        Ok(_) => {},
+        Err(e) => {
+            eprintln!("Error writing git-coauthors file: {:?}", e);
+            process::exit(1);
+        }
+    }
+}
+
+fn coauthors_file_path() -> std::path::PathBuf {
+    home_dir().unwrap().join(".git-coauthors")
 }
