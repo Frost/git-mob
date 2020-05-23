@@ -6,10 +6,8 @@ fn main() {
     let main_author = get_main_author();
     println!("{}", main_author);
 
-    with_repo_or_exit(truncate_gitmessage_template);
-}
-
-fn truncate_gitmessage_template(repo: Repository) {
-    let path = gitmessage_template_file_path(repo);
-    let _template = File::create(path);
+    with_repo_or_exit(|repo: Repository| {
+        let path = gitmessage_template_file_path(repo);
+        let _template = File::create(path);
+    })
 }
