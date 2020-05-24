@@ -14,7 +14,7 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 * Add Alice and Bob as a possible co-authors:
 
       git add-coauthor a "Alice" alice@example.com
-      git add-coauthor b "Bob" bob@example.com
+      git add-coauthor b "bob" Bob@example.com
 
 * Set Alice as co-author, making your mob consist of you and Alice:
 
@@ -23,6 +23,10 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 * Set both Alice and Bob as co-authors, making your mob consist of the three of you:
 
       git mob a b
+
+* Edit Bob's name, since you accidentally capitalized his email instead of his name:
+
+      git edit-coauthor b --name "Bob" --email bob@example.com
 
 * Remove Bob as a possible co-author:
 
@@ -41,6 +45,7 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 
 * `git mob <co-author-initials>`
 * `git add-coauthor <initials> "Co-author Name" <co-author-email-address>`
+* `git edit-coauthor [--name "Co-author Name"] [--email <co-author-email-address>]`
 * `git delete-coauthor <initials>`
 * `git mob -l`
 * `git solo`
@@ -55,7 +60,6 @@ be implemented, and then there is also a severe lack of tests and documentation.
 ### Missing features
 
 * `git mob-print`
-* `git edit-coauthor`
 * `git suggest-coauthors`
 * `-o` for overwriting the main author
 * `--installTemplate` and `--uninstallTemplate` for prepare-commit-msg
