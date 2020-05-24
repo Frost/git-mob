@@ -8,6 +8,10 @@ This is a CLI tool for including your co-authors in your commits.
 
 It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.com/package/git-mob).
 
+## Install
+
+Just run `cargo install git_mob` and you should be all set.
+
 
 ## Examples
 
