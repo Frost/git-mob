@@ -57,13 +57,12 @@ fn parse_coauthors_file() -> Result<BTreeMap<String, Author>, Box<dyn Error>> {
     }
 }
 
-pub fn gitmessage_template_file_path(repo: Repository) -> std::path::PathBuf {
-    repo.path().join(".gitmessage")
-}
-
-pub fn with_repo_or_exit<F: FnOnce(Repository)>(f: F) {
+pub fn with_gitmessage_template_path_or_exit<F: FnOnce(std::path::PathBuf)>(f: F) {
     match Repository::open_from_env() {
-        Ok(repo) => f(repo),
+        Ok(repo) => {
+            let path = repo.path().join(".gitmessage");
+            f(path);
+        },
         Err(_e) => {
             eprintln!("Not in a git repository");
             process::exit(1);

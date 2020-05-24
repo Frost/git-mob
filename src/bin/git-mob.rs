@@ -1,5 +1,4 @@
-use git_mob::{Author, get_main_author, get_available_coauthors, gitmessage_template_file_path, with_repo_or_exit};
-use git2::Repository;
+use git_mob::{Author, get_main_author, get_available_coauthors, with_gitmessage_template_path_or_exit};
 use structopt::StructOpt;
 use std::process;
 use std::fs;
@@ -37,9 +36,7 @@ fn write_coauthors_to_gitmessage_file(coauthor_initials: &[String]) {
         content.push_str(&format!("Co-authored-by: {}\n", &author.to_string()));
     }
 
-    with_repo_or_exit(|repo: Repository| {
-        let path = gitmessage_template_file_path(repo);
-
+    with_gitmessage_template_path_or_exit(|path| {
         match fs::write(path, content) {
             Ok(_) => {
                 println!("{}", get_main_author());
