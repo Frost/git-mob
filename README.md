@@ -12,6 +12,10 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 
 Just run `cargo install git_mob` and you should be all set.
 
+If it does not seem to work, try to run `git config --glebal commit.template
+.git/.gitmessage` to ensure that you have configured your your gitmessage
+template to where `git-mob` is looking for it.
+
 
 ## Examples
 
@@ -29,7 +33,8 @@ Just run `cargo install git_mob` and you should be all set.
 
       git mob a b
 
-* Set Alice as the main author for any commits you make, since she is the one doing most of the thinking anyway, and add yourself as a mob member:
+* Set Alice as the main author for any commits you make, since she is the one
+  doing most of the thinking anyway, and add yourself as a mob member:
 
       git mob -o a b me
 
