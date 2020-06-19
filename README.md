@@ -12,7 +12,7 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 
 Just run `cargo install git_mob` and you should be all set.
 
-If it does not seem to work, try to run `git config --glebal commit.template
+If it does not seem to work, try to run `git config --global commit.template
 .git/.gitmessage` to ensure that you have configured your your gitmessage
 template to where `git-mob` is looking for it.
 
