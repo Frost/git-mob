@@ -34,6 +34,14 @@ pub fn get_main_author() -> Author {
     }
 }
 
+pub fn set_main_author(author: &Author) {
+    with_git_repo_or_exit(|repo| {
+        let mut config = repo.config().unwrap();
+        config.set_str("user.name", &author.name).unwrap();
+        config.set_str("user.email", &author.email).unwrap();
+    });
+}
+
 pub fn get_available_coauthors() -> BTreeMap<String, Author> {
     match parse_coauthors_file() {
         Ok(coauthors) => coauthors,

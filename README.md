@@ -15,10 +15,11 @@ Just run `cargo install git_mob` and you should be all set.
 
 ## Examples
 
-* Add Alice and Bob as a possible co-authors:
+* Add Alice, Bob, and yourself as a possible co-authors:
 
       git add-coauthor a "Alice" alice@example.com
       git add-coauthor b "bob" Bob@example.com
+      git add-coauthor me "me" myself.i@example.com
 
 * Set Alice as co-author, making your mob consist of you and Alice:
 
@@ -27,6 +28,10 @@ Just run `cargo install git_mob` and you should be all set.
 * Set both Alice and Bob as co-authors, making your mob consist of the three of you:
 
       git mob a b
+
+* Set Alice as the main author for any commits you make, since she is the one doing most of the thinking anyway, and add yourself as a mob member:
+
+      git mob -o a b me
 
 * Edit Bob's name, since you accidentally capitalized his email instead of his name:
 
@@ -49,6 +54,7 @@ Just run `cargo install git_mob` and you should be all set.
 
 * `git mob <co-author-initials>`
 * `git add-coauthor <initials> "Co-author Name" <co-author-email-address>`
+* `git -o <initials>` for overwriting the main author
 * `git edit-coauthor [--name "Co-author Name"] [--email <co-author-email-address>]`
 * `git delete-coauthor <initials>`
 * `git mob -l`
@@ -65,7 +71,6 @@ be implemented, and then there is also a severe lack of tests and documentation.
 
 * `git mob-print`
 * `git suggest-coauthors`
-* `-o` for overwriting the main author
 * `--installTemplate` and `--uninstallTemplate` for prepare-commit-msg
 
 
