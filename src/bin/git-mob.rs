@@ -1,15 +1,18 @@
-use git_mob::{Author, get_main_author, get_available_coauthors, with_gitmessage_template_path_or_exit, set_main_author};
-use structopt::StructOpt;
-use std::process;
+use git_mob::{
+    get_available_coauthors, get_main_author, set_main_author,
+    with_gitmessage_template_path_or_exit, Author,
+};
 use std::fs;
+use std::process;
+use structopt::StructOpt;
 
-#[derive(StructOpt,Debug)]
+#[derive(StructOpt, Debug)]
 struct Opt {
     /// Prints list of available co-authors
-    #[structopt(short,long)]
+    #[structopt(short, long)]
     list: bool,
     /// Overwrite the main author
-    #[structopt(short,long)]
+    #[structopt(short, long)]
     overwrite: Option<String>,
     /// A list of co-author initials
     coauthors: Vec<String>,
@@ -54,25 +57,23 @@ fn write_coauthors_to_gitmessage_file(coauthor_initials: &[String]) {
         content.push_str(&format!("Co-authored-by: {}\n", &author.to_string()));
     }
 
-    with_gitmessage_template_path_or_exit(|path| {
-        match fs::write(path, content) {
-            Ok(_) => {
-                println!("{}", get_main_author());
-                for author in &coauthors {
-                    println!("{}", author);
-                }
-            },
-            Err(e) => {
-                eprintln!("Error writing to .gitmessage template: {}", e);
-                process::exit(1);
-            },
+    with_gitmessage_template_path_or_exit(|path| match fs::write(path, content) {
+        Ok(_) => {
+            println!("{}", get_main_author());
+            for author in &coauthors {
+                println!("{}", author);
+            }
+        }
+        Err(e) => {
+            eprintln!("Error writing to .gitmessage template: {}", e);
+            process::exit(1);
         }
     });
 }
 
-fn select_coauthors(coauthor_initials : &[String]) -> Vec<Author> {
+fn select_coauthors(coauthor_initials: &[String]) -> Vec<Author> {
     let all_coauthors = get_available_coauthors();
-    let mut coauthors : Vec<Author> = Vec::new();
+    let mut coauthors: Vec<Author> = Vec::new();
 
     for initial in coauthor_initials {
         match all_coauthors.get(initial) {

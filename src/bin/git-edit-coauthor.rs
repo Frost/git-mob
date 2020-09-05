@@ -1,8 +1,8 @@
-use git_mob::{Author, get_available_coauthors, write_coauthors_file} ;
-use structopt::StructOpt;
+use git_mob::{get_available_coauthors, write_coauthors_file, Author};
 use std::process;
+use structopt::StructOpt;
 
-#[derive(StructOpt,Debug)]
+#[derive(StructOpt, Debug)]
 struct Opt {
     /// Co-author initials
     initials: String,
@@ -18,7 +18,7 @@ fn main() {
     let opt = Opt::from_args();
 
     let mut authors = get_available_coauthors();
-    let mut updated_author : Author;
+    let mut updated_author: Author;
 
     if let Some(author) = authors.get(&opt.initials) {
         updated_author = author.clone();

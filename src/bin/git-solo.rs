@@ -1,5 +1,5 @@
-use std::fs::File;
 use git_mob::{get_main_author, with_gitmessage_template_path_or_exit};
+use std::fs::File;
 
 fn main() {
     let main_author = get_main_author();

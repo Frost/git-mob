@@ -1,7 +1,7 @@
-use git_mob::{Author, get_available_coauthors, write_coauthors_file} ;
+use git_mob::{get_available_coauthors, write_coauthors_file, Author};
 use structopt::StructOpt;
 
-#[derive(StructOpt,Debug)]
+#[derive(StructOpt, Debug)]
 struct Opt {
     /// Co-author initials
     initials: String,

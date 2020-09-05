@@ -1,15 +1,15 @@
-use serde::{Deserialize, Serialize};
-use std::fs;
-use git2::{Config, Repository};
-use std::fmt;
-use std::collections::BTreeMap;
 use dirs::home_dir;
+use git2::{Config, Repository};
+use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
+use std::fmt;
+use std::fs;
 
-use std::io::BufReader;
-use std::fs::File;
 use std::error::Error;
-use std::string::String;
+use std::fs::File;
+use std::io::BufReader;
 use std::process;
+use std::string::String;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Author {
@@ -57,11 +57,11 @@ fn parse_coauthors_file() -> Result<BTreeMap<String, Author>, Box<dyn Error>> {
     let coauthors_file = File::open(coauthors_path)?;
     let reader = BufReader::new(coauthors_file);
 
-    let json_data : serde_json::Value = serde_json::from_reader(reader)?;
+    let json_data: serde_json::Value = serde_json::from_reader(reader)?;
 
     match json_data.get("coauthors") {
         Some(coauthors) => Ok(serde_json::from_value(coauthors.clone()).unwrap()),
-        None => Ok(BTreeMap::new())
+        None => Ok(BTreeMap::new()),
     }
 }
 
@@ -69,7 +69,7 @@ fn with_git_repo_or_exit<F: FnOnce(Repository)>(f: F) {
     match Repository::open_from_env() {
         Ok(repo) => {
             f(repo);
-        },
+        }
         Err(_e) => {
             eprintln!("Not in a git repository");
             process::exit(1);
@@ -89,7 +89,7 @@ pub fn write_coauthors_file(authors: BTreeMap<String, Author>) {
     wrapper_tree.insert("coauthors", authors);
     let json_data = serde_json::to_string_pretty(&wrapper_tree).unwrap();
     match fs::write(coauthors_file_path(), json_data) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => {
             eprintln!("Error writing git-coauthors file: {:?}", e);
             process::exit(1);
