@@ -12,9 +12,16 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 
 Just run `cargo install git_mob` and you should be all set.
 
-If it does not seem to work, try to run `git config --global commit.template
-.git/.gitmessage` to ensure that you have configured your your gitmessage
-template to where `git-mob` is looking for it.
+## A note on commit template and git-mob
+
+`git-mob` _will_ currently override any existing `commit.template` setting
+in any project where it is run. It does this in order to ensure that `git
+commit` will pick up your current mob.
+
+The future plan is to do something a bit smarter, like first detecting if the
+repo already has a `commit.template` setting, and in that case, modify the
+existing template by adding `Co-authored-by:` trailers to it, or something
+similar.
 
 
 ## Examples

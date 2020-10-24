@@ -42,6 +42,15 @@ pub fn set_main_author(author: &Author) {
     });
 }
 
+pub fn ensure_commit_template_is_set() {
+    with_git_repo_or_exit(|repo| {
+        let mut config = repo.config().unwrap();
+        config
+            .set_str("commit.template", &".git/.gitmessage")
+            .unwrap();
+    })
+}
+
 pub fn get_available_coauthors() -> BTreeMap<String, Author> {
     match parse_coauthors_file() {
         Ok(coauthors) => coauthors,

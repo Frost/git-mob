@@ -1,5 +1,5 @@
 use git_mob::{
-    get_available_coauthors, get_main_author, set_main_author,
+    ensure_commit_template_is_set, get_available_coauthors, get_main_author, set_main_author,
     with_gitmessage_template_path_or_exit, Author,
 };
 use std::fs;
@@ -31,6 +31,7 @@ fn main() {
     }
 
     write_coauthors_to_gitmessage_file(&opt.coauthors);
+    ensure_commit_template_is_set();
 }
 
 fn list_coauthors() {
