@@ -157,7 +157,7 @@ dependencies = [
 
 [[package]]
 name = "git_mob"
-version = "0.3.3"
+version = "0.3.4"
 dependencies = [
  "dirs",
  "git2",

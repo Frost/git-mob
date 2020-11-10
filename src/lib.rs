@@ -24,7 +24,11 @@ impl fmt::Display for Author {
 }
 
 pub fn get_main_author() -> Author {
-    let cfg = Config::open_default().unwrap();
+    let cfg = match Repository::open_from_env() {
+        Ok(repo) => repo.config().unwrap(),
+        Err(_e) => Config::open_default().unwrap()
+    };
+
     let name = cfg.get_entry("user.name").unwrap();
     let email = cfg.get_entry("user.email").unwrap();
 
