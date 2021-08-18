@@ -43,7 +43,7 @@ fn list_coauthors() {
 fn override_main_author(initials: &str) {
     let all_authors = get_available_coauthors();
     match all_authors.get(initials) {
-        Some(new_main_author) => set_main_author(&new_main_author),
+        Some(new_main_author) => set_main_author(new_main_author),
         None => {
             eprintln!("Error: author with initials {} not found", initials);
             process::exit(1);
@@ -52,7 +52,7 @@ fn override_main_author(initials: &str) {
 }
 
 fn write_coauthors_to_gitmessage_file(coauthor_initials: &[String]) {
-    let coauthors = select_coauthors(&coauthor_initials);
+    let coauthors = select_coauthors(coauthor_initials);
     let mut content = String::from("\n\n");
     for author in &coauthors {
         content.push_str(&format!("Co-authored-by: {}\n", &author.to_string()));
