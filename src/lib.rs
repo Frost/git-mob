@@ -26,7 +26,7 @@ impl fmt::Display for Author {
 pub fn get_main_author() -> Author {
     let cfg = match Repository::open_from_env() {
         Ok(repo) => repo.config().unwrap(),
-        Err(_e) => Config::open_default().unwrap()
+        Err(_e) => Config::open_default().unwrap(),
     };
 
     let name = cfg.get_entry("user.name").unwrap();
@@ -50,7 +50,7 @@ pub fn ensure_commit_template_is_set() {
     with_git_repo_or_exit(|repo| {
         let mut config = repo.config().unwrap();
         config
-            .set_str("commit.template", &".git/.gitmessage")
+            .set_str("commit.template", ".git/.gitmessage")
             .unwrap();
     })
 }
