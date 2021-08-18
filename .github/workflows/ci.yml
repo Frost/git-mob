@@ -21,3 +21,26 @@ jobs:
       - run: cargo check --workspace --all-features
       - run: cargo test --all-targets
       - run: cargo fmt --all -- --check
+
+  build_package:
+    needs: lint_and_test
+    if: github.ref == 'refs/heads/main'
+    name: Build package
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - run: cargo build --release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: git-mob-${{ matrix.os }}
+          path: |
+            target/release/git-*
+            !target/release/*.d
