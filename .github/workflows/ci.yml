@@ -1,0 +1,23 @@
+on: push
+
+name: CI
+
+jobs:
+  lint_and_test:
+    name: lint and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: clippy, rustfmt
+      - uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features -- -D warnings
+      - run: cargo check --workspace --all-features
+      - run: cargo test --all-targets
+      - run: cargo fmt --all -- --check
