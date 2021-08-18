@@ -40,7 +40,7 @@ fn list_coauthors() {
     }
 }
 
-fn override_main_author(initials: &String) {
+fn override_main_author(initials: &str) {
     let all_authors = get_available_coauthors();
     match all_authors.get(initials) {
         Some(new_main_author) => set_main_author(&new_main_author),
