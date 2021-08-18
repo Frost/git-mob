@@ -10,6 +10,12 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 
 ## Install
 
+### Windows, MacOS, or Ubuntu
+
+Download the [latest release](https://github.com/Frost/git-mob/releases/latest) and extract it somewhere so that the binaries end up in your `$PATH`.
+
+### From source
+
 Just run `cargo install git_mob` and you should be all set.
 
 ## A note on commit template and git-mob
