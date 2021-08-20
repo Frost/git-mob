@@ -10,7 +10,15 @@ It is essentially a Rust clone of the [git-mob NPM package](https://www.npmjs.co
 
 ## Install
 
-### Windows, MacOS, or Ubuntu
+### MacOS
+
+If you have [Homebrew](https://brew.sh) installed, you can install `git-mob` using my tap:
+
+    brew install frost/tap/git-mob
+
+Otherwise, see the section on binary packages
+
+### Binary packages for MacOS, Ubuntu, and Windows
 
 Download the [latest release](https://github.com/Frost/git-mob/releases/latest) and extract it somewhere so that the binaries end up in your `$PATH`.
 
