@@ -65,7 +65,7 @@ pub fn get_available_coauthors() -> BTreeMap<String, Author> {
     }
 }
 
-fn parse_coauthors_file() -> Result<BTreeMap<String, Author>, Box<dyn Error>> {
+pub fn parse_coauthors_file() -> Result<BTreeMap<String, Author>, Box<dyn Error>> {
     let coauthors_path = coauthors_file_path();
     let coauthors_file = File::open(coauthors_path)?;
     let reader = BufReader::new(coauthors_file);
