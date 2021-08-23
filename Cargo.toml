@@ -17,3 +17,11 @@ git2 = { version = "0.13", default-features = false }
 serde = { version =  "1.0", features = ["derive"] }
 serde_json = "1.0"
 structopt = "0.3"
+
+[package.metadata.deb]
+name = "git-mob"
+revision = "1"
+section = "vcs"
+priority = "optional"
+extended-description = """\
+A set of git subcommands for including co-authors to your git commits."""
