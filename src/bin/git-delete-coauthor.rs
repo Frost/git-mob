@@ -1,8 +1,8 @@
+use clap::Parser;
 use git_mob::{get_available_coauthors, write_coauthors_file};
-use structopt::StructOpt;
 
-#[derive(StructOpt, Debug)]
-#[structopt(name="git-delete-coauthor")]
+#[derive(Parser, Debug)]
+#[clap(name = "git-delete-coauthor", version)]
 /// Delete a co-author from your .git-coauthors file
 struct Opt {
     /// Initials of the co-author to delete
@@ -10,7 +10,7 @@ struct Opt {
 }
 
 fn main() {
-    let opt = Opt::from_args();
+    let opt = Opt::parse();
     let mut authors = get_available_coauthors();
     authors.remove(&opt.initials);
     write_coauthors_file(authors);
