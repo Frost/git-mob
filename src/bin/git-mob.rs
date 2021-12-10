@@ -1,38 +1,38 @@
+use clap::Parser;
 use git_mob::{
     ensure_commit_template_is_set, get_available_coauthors, get_main_author, set_main_author,
     with_gitmessage_template_path_or_exit, Author,
 };
 use std::fs;
 use std::process;
-use structopt::StructOpt;
 
-#[derive(StructOpt, Debug)]
-#[structopt(name="git-mob")]
+#[derive(Parser, Debug)]
+#[clap(version, name = "git-mob")]
 /// Assemble a group of co-authors to help you on your coding quest
 struct Opt {
     /// Prints list of available co-authors
-    #[structopt(short, long)]
+    #[clap(short, long)]
     list: bool,
     /// Overwrite the main author
-    #[structopt(short, long)]
+    #[clap(short, long)]
     overwrite: Option<String>,
     /// A list of co-author initials
     coauthors: Vec<String>,
 }
 
 fn main() {
-    let opt = Opt::from_args();
+    let args = Opt::parse();
 
-    if opt.list {
+    if args.list {
         list_coauthors();
         process::exit(0);
     }
 
-    if let Some(initials) = opt.overwrite {
+    if let Some(initials) = args.overwrite {
         override_main_author(&initials);
     }
 
-    write_coauthors_to_gitmessage_file(&opt.coauthors);
+    write_coauthors_to_gitmessage_file(&args.coauthors);
     ensure_commit_template_is_set();
 }
 
