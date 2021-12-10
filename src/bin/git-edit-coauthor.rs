@@ -1,23 +1,23 @@
+use clap::Parser;
 use git_mob::{get_available_coauthors, write_coauthors_file, Author};
 use std::process;
-use structopt::StructOpt;
 
-#[derive(StructOpt, Debug)]
-#[structopt(name="git-edit-coauthor")]
+#[derive(Parser, Debug)]
+#[clap(name = "git-edit-coauthor", version)]
 /// Edit a co-author in your .git-coauthors template
 struct Opt {
     /// Co-author initials
     initials: String,
     /// The name of the co-author, in quotes, e.g. "Foo Bar"
-    #[structopt(long, required_unless("email"))]
+    #[clap(long, required_unless_present("email"))]
     name: Option<String>,
     /// The email of the co-author
-    #[structopt(long, required_unless("name"))]
+    #[clap(long, required_unless_present("name"))]
     email: Option<String>,
 }
 
 fn main() {
-    let opt = Opt::from_args();
+    let opt = Opt::parse();
 
     let mut authors = get_available_coauthors();
     let mut updated_author: Author;
