@@ -1,8 +1,8 @@
+use clap::Parser;
 use git_mob::{parse_coauthors_file, write_coauthors_file, Author};
-use structopt::StructOpt;
 
-#[derive(StructOpt, Debug)]
-#[structopt(name="git-add-coauthor")]
+#[derive(Parser, Debug)]
+#[clap(name = "git-add-coauthor", version)]
 /// Add a co-author to your git mob.
 struct Opt {
     /// Co-author initials
@@ -14,7 +14,7 @@ struct Opt {
 }
 
 fn main() {
-    let opt = Opt::from_args();
+    let opt = Opt::parse();
     let mut authors = parse_coauthors_file().unwrap_or_default();
     let new_author = Author {
         name: opt.name,
