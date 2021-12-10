@@ -3,6 +3,8 @@ use std::process;
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
+#[structopt(name="git-edit-coauthor")]
+/// Edit a co-author in your .git-coauthors template
 struct Opt {
     /// Co-author initials
     initials: String,

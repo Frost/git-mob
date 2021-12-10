@@ -2,6 +2,8 @@ use git_mob::{parse_coauthors_file, write_coauthors_file, Author};
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
+#[structopt(name="git-add-coauthor")]
+/// Add a co-author to your git mob.
 struct Opt {
     /// Co-author initials
     initials: String,

@@ -7,6 +7,8 @@ use std::process;
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
+#[structopt(name="git-mob")]
+/// Assemble a group of co-authors to help you on your coding quest
 struct Opt {
     /// Prints list of available co-authors
     #[structopt(short, long)]

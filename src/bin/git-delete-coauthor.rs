@@ -2,6 +2,8 @@ use git_mob::{get_available_coauthors, write_coauthors_file};
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
+#[structopt(name="git-delete-coauthor")]
+/// Delete a co-author from your .git-coauthors file
 struct Opt {
     /// Initials of the co-author to delete
     initials: String,
