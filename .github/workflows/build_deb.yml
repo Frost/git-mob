@@ -14,6 +14,8 @@ jobs:
           toolchain: stable
           override: true
       - run: cargo install cargo-deb
+      - run: cargo build --release
+      - run: ./build-manpages.sh
       - run: cargo deb
       - uses: actions/upload-artifact@v2
         with:
