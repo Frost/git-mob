@@ -37,10 +37,13 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+      - run: cargo install mdsh mandown
       - run: cargo build --release
+      - run: ./build-manpages.sh
       - uses: actions/upload-artifact@v2
         with:
           name: git-mob-${{ matrix.os }}
           path: |
             target/release/git-*
+            target/man
             !target/release/*.d
