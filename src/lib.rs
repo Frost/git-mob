@@ -49,9 +49,10 @@ pub fn set_main_author(author: &Author) {
 pub fn ensure_commit_template_is_set() {
     with_git_repo_or_exit(|repo| {
         let mut config = repo.config().unwrap();
-        config
-            .set_str("commit.template", ".git/.gitmessage")
-            .unwrap();
+        let template_path = repo.path().join(".gitmessage");
+        if let Some(template_path) = template_path.to_str() {
+            config.set_str("commit.template", template_path).unwrap();
+        }
     })
 }
 
