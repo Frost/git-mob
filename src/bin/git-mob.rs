@@ -82,7 +82,7 @@ fn select_coauthors(coauthor_initials: &[String]) -> Vec<Author> {
         match all_coauthors.get(initial) {
             Some(coauthor) => coauthors.push(coauthor.clone()),
             None => {
-                eprintln!("Error: atuhor with initials {} not found", initial);
+                eprintln!("Error: author with initials {} not found", initial);
                 process::exit(1);
             }
         }
