@@ -3,13 +3,14 @@ use git_mob::{
     ensure_commit_template_is_set, get_available_coauthors, get_main_author, set_main_author,
     with_gitmessage_template_path_or_exit, Author,
 };
+use std::fmt::Write;
 use std::fs;
 use std::process;
 
 #[derive(Parser, Debug)]
 #[clap(version, name = "git-mob")]
 /// Assemble a group of co-authors to help you on your coding quest
-struct Opt {
+pub struct Opt {
     /// Prints list of available co-authors
     #[clap(short, long)]
     list: bool,
@@ -57,7 +58,7 @@ fn write_coauthors_to_gitmessage_file(coauthor_initials: &[String]) {
     let coauthors = select_coauthors(coauthor_initials);
     let mut content = String::from("\n\n");
     for author in &coauthors {
-        content.push_str(&format!("Co-authored-by: {}\n", &author.to_string()));
+        _ = writeln!(content, "Co-authored-by: {}", &author.to_string());
     }
 
     with_gitmessage_template_path_or_exit(|path| match fs::write(path, content) {
