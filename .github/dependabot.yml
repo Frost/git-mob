@@ -7,6 +7,5 @@ version: 2
 updates:
   - package-ecosystem: "cargo"
     directory: "/"
-    allow: "all"
     schedule:
       interval: "weekly"
