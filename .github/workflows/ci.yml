@@ -2,10 +2,6 @@ on: push
 
 name: CI
 
-permissions:
-  issues: write
-  pull-requests: write
-
 jobs:
   lint_and_test:
     name: lint and test
@@ -19,6 +15,7 @@ jobs:
           override: true
           components: clippy, rustfmt
       - uses: actions-rs/clippy-check@v1
+        if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-features -- -D warnings
