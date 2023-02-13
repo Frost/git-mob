@@ -17,6 +17,6 @@ jobs:
       - run: cargo build --release
       - run: ./build-manpages.sh
       - run: cargo deb
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: target/debian/*.deb

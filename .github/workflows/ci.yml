@@ -41,7 +41,7 @@ jobs:
       - run: cargo install mdsh mandown
       - run: cargo build --release
       - run: ./build-manpages.sh
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: git-mob-${{ matrix.os }}
           path: |
