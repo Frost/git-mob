@@ -60,7 +60,7 @@ pub fn get_available_coauthors() -> BTreeMap<String, Author> {
     match parse_coauthors_file() {
         Ok(coauthors) => coauthors,
         Err(e) => {
-            eprintln!("{}", e);
+            eprintln!("{e:?}");
             BTreeMap::new()
         }
     }
@@ -105,7 +105,7 @@ pub fn write_coauthors_file(authors: BTreeMap<String, Author>) {
     match fs::write(coauthors_file_path(), json_data) {
         Ok(_) => {}
         Err(e) => {
-            eprintln!("Error writing git-coauthors file: {:?}", e);
+            eprintln!("Error writing git-coauthors file: {e:?}");
             process::exit(1);
         }
     }
