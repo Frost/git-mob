@@ -6,15 +6,15 @@
   };
 
   outputs = { self, flake-utils, naersk, nixpkgs }:
-    let
-      overlay = (final: prev:
+    {
+      overlays.default = (final: prev:
         let naersk' = final.callPackage naersk { };
         in { git-mob = naersk'.buildPackage { src = ./.; }; });
-    in flake-utils.lib.eachDefaultSystem (system:
+    } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = (import nixpkgs) {
           inherit system;
-          overlays = [ overlay ];
+          overlays = [ self.overlays.default ];
         };
       in rec {
         defaultPackage = pkgs.git-mob;
