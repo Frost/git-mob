@@ -7,15 +7,10 @@
 
   outputs = { self, flake-utils, naersk, nixpkgs }:
     let
-      overlay =
-        (final: prev:
-          let
-            naersk' = final.callPackage naersk {};
-          in {
-              git-mob = naersk'.buildPackage {src = ./.;};
-            });
-    in
-      flake-utils.lib.eachDefaultSystem (system:
+      overlay = (final: prev:
+        let naersk' = final.callPackage naersk { };
+        in { git-mob = naersk'.buildPackage { src = ./.; }; });
+    in flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = (import nixpkgs) {
           inherit system;
@@ -23,9 +18,7 @@
         };
       in rec {
         defaultPackage = pkgs.git-mob;
-        devShell = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [ rustc cargo ];
-        };
-      }
-    );
+        devShell =
+          pkgs.mkShell { nativeBuildInputs = with pkgs; [ rustc cargo ]; };
+      });
 }
