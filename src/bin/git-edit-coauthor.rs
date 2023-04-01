@@ -9,13 +9,8 @@ fn main() {
 
     if let Some(author) = authors.get(&opt.initials) {
         let mut updated_author: Author = author.clone();
-        if let Some(name) = opt.name {
-            updated_author.name = name;
-        };
-
-        if let Some(email) = opt.email {
-            updated_author.email = email;
-        };
+        updated_author.name = opt.name;
+        updated_author.email = opt.email;
 
         authors.insert(opt.initials, updated_author);
 
