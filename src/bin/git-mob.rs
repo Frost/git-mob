@@ -1,28 +1,14 @@
 use clap::Parser;
 use git_mob::{
-    ensure_commit_template_is_set, get_available_coauthors, get_main_author, set_main_author,
+    cli, ensure_commit_template_is_set, get_available_coauthors, get_main_author, set_main_author,
     with_gitmessage_template_path_or_exit, Author,
 };
 use std::fmt::Write;
 use std::fs;
 use std::process;
 
-#[derive(Parser, Debug)]
-#[clap(version, name = "git-mob")]
-/// Assemble a group of co-authors to help you on your coding quest
-pub struct Opt {
-    /// Prints list of available co-authors
-    #[clap(short, long)]
-    list: bool,
-    /// Overwrite the main author
-    #[clap(short, long)]
-    overwrite: Option<String>,
-    /// A list of co-author initials
-    coauthors: Vec<String>,
-}
-
 fn main() {
-    let args = Opt::parse();
+    let args = cli::GitMob::parse();
 
     if args.list {
         list_coauthors();

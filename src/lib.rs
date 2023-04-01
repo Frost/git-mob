@@ -11,6 +11,8 @@ use std::io::BufReader;
 use std::process;
 use std::string::String;
 
+pub mod cli;
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Author {
     pub name: String,

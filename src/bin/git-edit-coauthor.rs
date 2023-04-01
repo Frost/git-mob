@@ -1,23 +1,9 @@
 use clap::Parser;
-use git_mob::{get_available_coauthors, write_coauthors_file, Author};
+use git_mob::{cli, get_available_coauthors, write_coauthors_file, Author};
 use std::process;
 
-#[derive(Parser, Debug)]
-#[clap(name = "git-edit-coauthor", version)]
-/// Edit a co-author in your .git-coauthors template
-struct Opt {
-    /// Co-author initials
-    initials: String,
-    /// The name of the co-author, in quotes, e.g. "Foo Bar"
-    #[clap(long, required_unless_present("email"))]
-    name: Option<String>,
-    /// The email of the co-author
-    #[clap(long, required_unless_present("name"))]
-    email: Option<String>,
-}
-
 fn main() {
-    let opt = Opt::parse();
+    let opt = cli::GitDeleteCoauthor::parse();
 
     let mut authors = get_available_coauthors();
 
