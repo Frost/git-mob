@@ -1,5 +1,5 @@
 [package]
-name = "git_mob"
+name = "git-mob"
 version = "0.4.2"
 authors = [ "Martin Frost <martin@frost.ws>" ]
 edition = "2018"
