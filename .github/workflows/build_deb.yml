@@ -15,7 +15,7 @@ jobs:
           override: true
       - run: cargo install cargo-deb
       - run: cargo build --release
-      - run: ./build-manpages.sh
+      - run: ./prepare-release.sh
       - run: cargo deb
       - uses: actions/upload-artifact@v3
         with:
