@@ -13,7 +13,6 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo install cargo-deb
       - run: cargo build --release
-      - run: ./prepare-release.sh
       - run: cargo deb
       - uses: actions/upload-artifact@v3
         with:
