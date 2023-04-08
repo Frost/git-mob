@@ -8,18 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
           components: clippy, rustfmt
       - uses: Swatinem/rust-cache@v2
-      - uses: actions-rs/clippy-check@v1
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features -- -D warnings
+      - run: cargo clippy --all-features -- -D warnings
       - run: cargo check --workspace --all-features
       - run: cargo test --all-targets
       - run: cargo fmt --all -- --check
@@ -34,11 +27,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
           toolchain: stable
-          override: true
       - uses: Swatinem/rust-cache@v2
       - run: cargo build --release
       - run: ./prepare-release.sh
