@@ -30,15 +30,15 @@ priority = "optional"
 extended-description = """\
 A set of git subcommands for including co-authors to your git commits."""
 assets = [
-    ["target/release/git-mob", "usr/bin/", "755"],
-    ["target/release/git-solo", "usr/bin/", "755"],
-    ["target/release/git-add-coauthor", "usr/bin/", "755"],
-    ["target/release/git-edit-coauthor", "usr/bin/", "755"],
-    ["target/release/git-delete-coauthor", "usr/bin/", "755"],
-    ["target/man/git-mob.1.gz", "usr/share/man/man1/", "644"],
-    ["target/man/git-solo.1.gz", "usr/share/man/man1/", "644"],
-    ["target/man/git-add-coauthor.1.gz", "usr/share/man/man1/", "644"],
-    ["target/man/git-edit-coauthor.1.gz", "usr/share/man/man1/", "644"],
-    ["target/man/git-delete-coauthor.1.gz", "usr/share/man/man1/", "644"],
+    ["ci-release/bin/git-mob", "usr/bin/", "755"],
+    ["ci-release/bin/git-solo", "usr/bin/", "755"],
+    ["ci-release/bin/git-add-coauthor", "usr/bin/", "755"],
+    ["ci-release/bin/git-edit-coauthor", "usr/bin/", "755"],
+    ["ci-release/bin/git-delete-coauthor", "usr/bin/", "755"],
+    ["ci-release/man/git-mob.1.gz", "usr/share/man/man1/", "644"],
+    ["ci-release/man/git-solo.1.gz", "usr/share/man/man1/", "644"],
+    ["ci-release/man/git-add-coauthor.1.gz", "usr/share/man/man1/", "644"],
+    ["ci-release/man/git-edit-coauthor.1.gz", "usr/share/man/man1/", "644"],
+    ["ci-release/man/git-delete-coauthor.1.gz", "usr/share/man/man1/", "644"],
     ["README.md", "usr/share/doc/git-mob/README", "644"],
 ]
