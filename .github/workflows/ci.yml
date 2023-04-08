@@ -21,6 +21,8 @@ jobs:
     needs: lint_and_test
     if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/build-') }}
     name: Build package
+    env:
+      RUSTFLAGS: "-C strip=debuginfo"
     strategy:
       matrix:
         os:
