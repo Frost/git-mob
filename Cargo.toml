@@ -1,6 +1,6 @@
 [package]
 name = "git-mob"
-version = "0.4.2"
+version = "0.5.0"
 authors = [ "Martin Frost <martin@frost.ws>" ]
 edition = "2018"
 description = "A CLI tool for social coding."
