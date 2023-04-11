@@ -40,7 +40,7 @@ jobs:
       - name: prepare release artifact
         shell: bash
         run: |
-          mkdir target/{bin,man}
+          mkdir -p target/{bin,man}
           cp target/release/*.1 target/man
           cp target/release/git-{mob,solo,{add,edit,delete}-coauthor} target/bin
       - uses: actions/upload-artifact@v3
