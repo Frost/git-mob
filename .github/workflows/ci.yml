@@ -43,7 +43,7 @@ jobs:
           mkdir -p target/{bin,man}
           cp target/release/*.1 target/man
           cp target/release/git-{mob,solo,{add,edit,delete}-coauthor} target/bin
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: git-mob-${{ matrix.os }}
           path: |
