@@ -1,4 +1,4 @@
-use dirs::home_dir;
+use env_home::env_home_dir as home_dir;
 use git2::{Config, Repository};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
