@@ -25,7 +25,7 @@ fn main() {
 
 fn list_coauthors() {
     for (abbrev, author) in &get_available_coauthors() {
-        println!("{}\t{}", abbrev, author);
+        println!("{abbrev}\t{author}");
     }
 }
 
@@ -34,7 +34,7 @@ fn override_main_author(initials: &str) {
     match all_authors.get(initials) {
         Some(new_main_author) => set_main_author(new_main_author),
         None => {
-            eprintln!("Error: author with initials {} not found", initials);
+            eprintln!("Error: author with initials {initials} not found");
             process::exit(1);
         }
     }
@@ -51,11 +51,11 @@ fn write_coauthors_to_gitmessage_file(coauthor_initials: &[String]) {
         Ok(_) => {
             println!("{}", get_main_author());
             for author in &coauthors {
-                println!("{}", author);
+                println!("{author}");
             }
         }
         Err(e) => {
-            eprintln!("Error writing to .gitmessage template: {}", e);
+            eprintln!("Error writing to .gitmessage template: {e}");
             process::exit(1);
         }
     });
@@ -69,7 +69,7 @@ fn select_coauthors(coauthor_initials: &[String]) -> Vec<Author> {
         match all_coauthors.get(initial) {
             Some(coauthor) => coauthors.push(coauthor.clone()),
             None => {
-                eprintln!("Error: author with initials {} not found", initial);
+                eprintln!("Error: author with initials {initial} not found");
                 process::exit(1);
             }
         }
