@@ -1,56 +1,46 @@
-use clap::Parser;
+use clap::{Arg, arg};
 
-#[derive(Parser, Debug)]
-#[clap(version, name = "git-mob")]
-/// Assemble a group of co-authors to help you on your coding quest
-pub struct GitMob {
-    /// Prints list of available co-authors
-    #[clap(short, long)]
-    pub list: bool,
-    /// Overwrite the main author
-    #[clap(short, long)]
-    pub overwrite: Option<String>,
-    /// A list of co-author initials
-    pub coauthors: Vec<String>,
+pub fn git_mob_cmd() -> clap::Command {
+clap::Command::new("git-mob")
+        .bin_name("git-mob")
+        .author("Martin Frost, martin@frost.codes")
+        .version("0.0.0")
+        .about("A command-line tool for social coding")
+        .subcommand(
+            clap::Command::new("add")
+                .alias("add-coauthor")
+                .about("Add a coauthor to the database")
+                .arg(arg!(<handle> "The coauthor's handle"))
+                .arg(arg!(<name> "The coauthor's name, in quotes"))
+                .arg(arg!(<email> "The coauthor's email"))
+        )
+        .subcommand(
+            clap::Command::new("edit")
+                .alias("edit-coauthor")
+                .about("Edit a coauthor in the database")
+                .arg(arg!(<handle> "The coauthor's handle"))
+                .arg(arg!(<name> "The coauthor's name, in quotes"))
+                .arg(arg!(<email> "The coauthor's email"))
+        )
+        .subcommand(
+            clap::Command::new("remove")
+                .alias("remove-coauthor")
+                .alias("rm")
+                .about("Remove a coauthor from the database")
+                .arg(arg!(<handle> "The coauthor's handle"))
+        )
+        .subcommand(
+            clap::Command::new("solo")
+            .about("Disband the mob. Continue coding on your own")
+            .arg_required_else_help(false))
+        .subcommand(
+            clap::Command::new("list")
+            .about("List available coauthors in the database")
+            .arg_required_else_help(false))
+        .subcommand(
+            clap::Command::new("with")
+                .about("Choose coauthors to join your mob")
+                .arg_required_else_help(true)
+                .arg(Arg::new("override").short('o').long("override").help("Override default author").value_name("handle"))
+                .arg(arg!([handles] "The coauthors you want in your mob").num_args(1..)))
 }
-
-#[derive(Parser, Debug)]
-#[clap(name = "git-add-coauthor", version)]
-/// Add a co-author to your list of available co-authors
-pub struct GitAddCoauthor {
-    /// Co-author initials
-    pub initials: String,
-    /// The name of the co-author, in quotes, e.g. "Foo Bar"
-    pub name: String,
-    /// The email of the co-author
-    pub email: String,
-}
-
-#[derive(Parser, Debug)]
-#[clap(name = "git-edit-coauthor", version)]
-/// Edit a co-author in your list of available co-authors
-pub struct GitEditCoauthor {
-    /// Co-author initials
-    pub initials: String,
-    /// The name of the co-author, in quotes, e.g. "Foo Bar"
-    pub name: String,
-    /// The email of the co-author
-    pub email: String,
-}
-
-#[derive(Parser, Debug)]
-#[clap(name = "git-delete-coauthor", version)]
-/// Delete a co-author from your list of available co-authors
-pub struct GitDeleteCoauthor {
-    /// Co-author initials
-    pub initials: String,
-    /// The name of the co-author, in quotes, e.g. "Foo Bar"
-    pub name: String,
-    /// The email of the co-author
-    pub email: String,
-}
-
-#[derive(Parser, Debug)]
-#[clap(name = "git-solo", version)]
-/// Disband the mob and continue working solo.
-pub struct GitSolo {}
