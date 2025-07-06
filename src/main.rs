@@ -1,16 +1,16 @@
-use clap::{Arg, arg};
+use git_mob::cli;
+use std::fmt::Write;
+use std::fs;
+use std::fs::File;
+use std::process;
 use git_mob::{
     ensure_commit_template_is_set, get_available_coauthors,
     get_main_author, set_main_author, with_gitmessage_template_path_or_exit,
     Author, parse_coauthors_file, write_coauthors_file
 };
-use std::fmt::Write;
-use std::fs::File;
-use std::fs;
-use std::process;
 
 fn main() {
-    let matches = git_mob_cmd().get_matches();
+    let matches = cli::git_mob_cmd().get_matches();
 
     match matches.subcommand_name() {
         Some("add") => {
@@ -47,51 +47,6 @@ fn main() {
         },
         _ => println!("Something else"),
     }
-}
-
-pub fn git_mob_cmd() -> clap::Command {
-clap::Command::new("git-mob")
-        .bin_name("git-mob")
-        .author("Martin Frost, martin@frost.codes")
-        .version("0.0.0")
-        .about("A command-line tool for social coding")
-        .subcommand(
-            clap::Command::new("add")
-                .alias("add-coauthor")
-                .about("Add a coauthor to the database")
-                .arg(arg!(<handle> "The coauthor's handle"))
-                .arg(arg!(<name> "The coauthor's name, in quotes"))
-                .arg(arg!(<email> "The coauthor's email"))
-        )
-        .subcommand(
-            clap::Command::new("edit")
-                .alias("edit-coauthor")
-                .about("Edit a coauthor in the database")
-                .arg(arg!(<handle> "The coauthor's handle"))
-                .arg(arg!(<name> "The coauthor's name, in quotes"))
-                .arg(arg!(<email> "The coauthor's email"))
-        )
-        .subcommand(
-            clap::Command::new("remove")
-                .alias("remove-coauthor")
-                .alias("rm")
-                .about("Remove a coauthor from the database")
-                .arg(arg!(<handle> "The coauthor's handle"))
-        )
-        .subcommand(
-            clap::Command::new("solo")
-            .about("Disband the mob. Continue coding on your own")
-            .arg_required_else_help(false))
-        .subcommand(
-            clap::Command::new("list")
-            .about("List available coauthors in the database")
-            .arg_required_else_help(false))
-        .subcommand(
-            clap::Command::new("with")
-                .about("Choose coauthors to join your mob")
-                .arg_required_else_help(true)
-                .arg(Arg::new("override").short('o').long("override").help("Override default author").value_name("handle"))
-                .arg(arg!([handles] "The coauthors you want in your mob").num_args(1..)))
 }
 
 fn list_coauthors() {
