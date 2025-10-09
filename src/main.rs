@@ -12,41 +12,71 @@ use git_mob::{
 fn main() {
     let matches = cli::git_mob_cmd().get_matches();
 
-    match matches.subcommand_name() {
-        Some("add") => {
-            let args = matches.subcommand_matches("add").unwrap();
-            let handle = args.get_one("handle").unwrap();
-            let name = args.get_one("name").unwrap();
-            let email = args.get_one("email").unwrap();
-            add_coauthor(handle, name, email);
-        },
-        Some("edit") => {
-            let args = matches.subcommand_matches("edit").unwrap();
-            let handle = args.get_one("handle").unwrap();
-            let name = args.get_one("name").unwrap();
-            let email = args.get_one("email").unwrap();
-            edit_coauthor(handle, name, email);
-        },
-        Some("remove") => {
-            let handle = matches.subcommand_matches("remove").unwrap()
-                .get_one("handle").unwrap();
-            remove_coauthor(handle);
-        },
-        Some("list") => list_coauthors(),
-        Some("solo") => solo(),
-        Some("with") => {
-            let matches = matches.subcommand_matches("with").unwrap();
-            let handles: Vec<String> =
-                matches.get_many::<String>("handles").unwrap().map(|s| s.clone()).collect();
+    println!("matches: {:?}", matches);
 
-            if let Some(handle) = matches.get_one::<String>("override") {
-                override_main_author(handle);
-            }
-
-            write_coauthors_to_gitmessage_file(&handles);
-        },
-        _ => println!("Something else"),
+    if let Some(handles) = matches.get_raw("with") {
+        println!("with: {:?}", handles);
     }
+    if matches.get_one("solo") == Some(&true) {
+        solo();
+    }
+    if matches.get_one("current") == Some(&true) {
+        println!("current.");
+    }
+
+    if let Some(add_args) = matches.get_raw("add") {
+        println!("add: {:?}", add_args);
+
+    }
+    if let Some(edit_args) = matches.get_raw("edit") {
+        println!("edit: {:?}", edit_args);
+
+    }
+    if let Some(delete_handle) = matches.get_one::<String>("delete") {
+        println!("delete: {:?}", delete_handle);
+
+    }
+    if matches.get_one("list") == Some(&true) {
+        list_coauthors();
+    }
+
+
+
+    // match matches.subcommand_name() {
+    //     Some("add") => {
+    //         let args = matches.subcommand_matches("add").unwrap();
+    //         let handle = args.get_one("handle").unwrap();
+    //         let name = args.get_one("name").unwrap();
+    //         let email = args.get_one("email").unwrap();
+    //         add_coauthor(handle, name, email);
+    //     },
+    //     Some("edit") => {
+    //         let args = matches.subcommand_matches("edit").unwrap();
+    //         let handle = args.get_one("handle").unwrap();
+    //         let name = args.get_one("name").unwrap();
+    //         let email = args.get_one("email").unwrap();
+    //         edit_coauthor(handle, name, email);
+    //     },
+    //     Some("remove") => {
+    //         let handle = matches.subcommand_matches("remove").unwrap()
+    //             .get_one("handle").unwrap();
+    //         remove_coauthor(handle);
+    //     },
+    //     Some("list") => list_coauthors(),
+    //     Some("solo") => solo(),
+    //     Some("with") => {
+    //         let matches = matches.subcommand_matches("with").unwrap();
+    //         let handles: Vec<String> =
+    //             matches.get_many::<String>("handles").unwrap().map(|s| s.clone()).collect();
+
+    //         if let Some(handle) = matches.get_one::<String>("override") {
+    //             override_main_author(handle);
+    //         }
+
+    //         write_coauthors_to_gitmessage_file(&handles);
+    //     },
+    //     _ => println!("Something else"),
+    // }
 }
 
 fn list_coauthors() {
